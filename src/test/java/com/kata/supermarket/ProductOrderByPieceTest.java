@@ -1,6 +1,7 @@
 package com.kata.supermarket;
 
 import com.kata.supermarket.model.IProductOrder;
+import com.kata.supermarket.model.Offer;
 import com.kata.supermarket.model.Product;
 import com.kata.supermarket.model.ProductOrderByPiece;
 import junit.framework.Assert;
@@ -16,5 +17,13 @@ public class ProductOrderByPieceTest {
         Product milk = new Product("Candia milk", 1);
         IProductOrder productOrder = new ProductOrderByPiece(milk, 3);
         Assert.assertEquals(3d, productOrder.calculateProductOrderPrice());
+    }
+
+    @Test
+    public void testOrderWithOffer() {
+        Product milk = new Product("Candia milk", 1);
+        Offer milkOffer = new Offer(6, 5);
+        IProductOrder productOrder = new ProductOrderByPiece(milk, 8, milkOffer);
+        Assert.assertEquals(7d, productOrder.calculateProductOrderPrice());
     }
 }

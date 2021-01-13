@@ -10,6 +10,10 @@ public class ProductOrderByPiece implements IProductOrder {
         this.orderAmount = orderAmount;
     }
 
+    public ProductOrderByPiece(Product product, int orderAmount, Offer offer) {
+        this(product, orderAmount);
+    }
+
     @Override
     public double calculateProductOrderPrice() {
         return product.getInitialPrice() * orderAmount;
