@@ -1,5 +1,6 @@
 package com.kata.supermarket.model;
 
+import com.kata.supermarket.converter.IWeightConverter;
 import com.kata.supermarket.type.WeightUnity;
 
 public class ProductOrderByWeight implements IProductOrder {
@@ -8,6 +9,8 @@ public class ProductOrderByWeight implements IProductOrder {
     private int orderAmount;
     private WeightUnity orderUnity;
     private OfferByWeight offer;
+
+    private IWeightConverter converter = new IWeightConverter() {}; // should implement a converter
 
     public ProductOrderByWeight(Product product, int orderAmount, WeightUnity orderUnity) {
         this.product = product;
@@ -21,6 +24,16 @@ public class ProductOrderByWeight implements IProductOrder {
 
     @Override
     public double calculateProductOrderPrice() {
-        return product.getInitialPrice() * orderAmount;
+        //if no offer
+        if (offer == null) {
+            return product.getInitialPrice() * orderAmount;
+        }
+        float unityConvertionRate = converter.getRate(offer.getUnity(), orderUnity);
+        int offerAmount = offer.getOfferAmount();
+        double total = offer.getOfferPrice() * (orderAmount / offerAmount);
+        if (orderAmount % offerAmount != 0) {
+            total += (orderAmount % offerAmount) * product.getInitialPrice();
+        }
+        return unityConvertionRate * total;
     }
 }
