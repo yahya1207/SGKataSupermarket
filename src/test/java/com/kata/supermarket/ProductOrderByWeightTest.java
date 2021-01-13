@@ -1,6 +1,7 @@
 package com.kata.supermarket;
 
 import com.kata.supermarket.model.IProductOrder;
+import com.kata.supermarket.model.OfferByWeight;
 import com.kata.supermarket.model.Product;
 import com.kata.supermarket.model.ProductOrderByWeight;
 import junit.framework.Assert;
@@ -17,5 +18,12 @@ public class ProductOrderByWeightTest {
         Product tomatoes = new Product("Round tomatoes", 5);
         IProductOrder productOrder = new ProductOrderByWeight(tomatoes, 7, POUND);
         Assert.assertEquals(35d, productOrder.calculateProductOrderPrice());
+    }
+    @Test
+    public void testOrderByWeightWithOffer() {
+        Product tomatoes = new Product("Round tomatoes", 5);
+        OfferByWeight tomatoesOffer = new OfferByWeight(3, POUND, 10);
+        IProductOrder productOrder = new ProductOrderByWeight(tomatoes, 7, POUND, tomatoesOffer);
+        Assert.assertEquals(25d, productOrder.calculateProductOrderPrice());
     }
 }
