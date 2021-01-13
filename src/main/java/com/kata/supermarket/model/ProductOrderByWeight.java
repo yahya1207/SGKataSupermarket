@@ -23,14 +23,14 @@ public class ProductOrderByWeight implements IProductOrder {
     }
 
     @Override
-    public double calculateProductOrderPrice() {
+    public float calculateProductOrderPrice() {
         //if no offer
         if (offer == null) {
             return product.getInitialPrice() * orderAmount;
         }
         float unityConvertionRate = converter.getRate(offer.getUnity(), orderUnity);
         int offerAmount = offer.getOfferAmount();
-        double total = offer.getOfferPrice() * (orderAmount / offerAmount);
+        float total = offer.getOfferPrice() * (orderAmount / offerAmount);
         if (orderAmount % offerAmount != 0) {
             total += (orderAmount % offerAmount) * product.getInitialPrice();
         }

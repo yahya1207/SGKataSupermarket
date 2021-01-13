@@ -17,7 +17,7 @@ public class ProductOrderByPiece implements IProductOrder {
     }
 
     @Override
-    public double calculateProductOrderPrice() {
+    public float calculateProductOrderPrice() {
         if (offer == null) {
             return product.getInitialPrice() * orderAmount;
         }
